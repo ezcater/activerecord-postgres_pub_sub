@@ -1,18 +1,16 @@
 lib = File.expand_path("../lib", __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require "activerecord-postgres_pub_sub/version"
+require "activerecord/postgres_pub_sub/version"
 
 Gem::Specification.new do |spec|
   spec.name          = "activerecord-postgres_pub_sub"
   spec.version       = ActiveRecord::PostgresPubSub::VERSION
   spec.authors       = ["ezCater, Inc"]
   spec.email         = ["engineering@ezcater.com"]
-
   spec.summary       = "Support for Postgres Notify/Listen"
   spec.description   = spec.summary
   spec.homepage      = "https://github.com/ezcater/activerecord-postgres_pub_sub"
   
-
   # Set "allowed_push_post" to control where this gem can be published.
   # rubocop:disable Style/GuardClause
   if spec.respond_to?(:metadata)
@@ -43,10 +41,8 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   spec.add_development_dependency "bundler", "~> 1.12"
-  
   spec.add_development_dependency "ezcater_gem", ">= 0.2.0"
-  
-  spec.add_development_dependency "ezcater_rubocop"
+  spec.add_development_dependency "ezcater_rubocop", "~> 0.51.6"
   spec.add_development_dependency "overcommit"
   spec.add_development_dependency "rake", "~> 10.0"
   spec.add_development_dependency "rspec", "~> 3.4"

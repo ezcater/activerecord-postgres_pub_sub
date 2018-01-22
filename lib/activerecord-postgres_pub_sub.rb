@@ -1,5 +1,7 @@
-require "activerecord-postgres_pub_sub/version"
+require "activerecord/postgres_pub_sub/version"
 
-# Top-level gem module
-module ActiveRecord::PostgresPubSub
+module ActiveRecord
+  # Top-level gem module
+  module PostgresPubSub
+  end
 end
