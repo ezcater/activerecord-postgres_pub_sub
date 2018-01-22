@@ -1,0 +1,44 @@
+version: 2
+jobs:
+  build:
+    parallelism: 1
+    working_directory: ~/ezcater
+    docker:
+      - image: circleci/ruby:2.4.1
+    steps:
+      - checkout
+
+      # Restore bundle cache
+      - restore_cache:
+          keys:
+            - ruby-cache-{{ arch }}-{{ .Branch }}-{{ checksum "Gemfile" }}-{{ checksum "activerecord-postgres_pub_sub.gemspec" }}
+            - ruby-cache-{{ arch }}-{{ .Branch }}-
+            - ruby-cache-
+
+      # Bundle install dependencies
+      - run: gem install bundler --no-document
+      - run: bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs=4 --retry=3
+      - run: bundle clean --force
+
+      # Store bundle cache
+      - save_cache:
+          key: ruby-cache-{{ arch }}-{{ .Branch }}-{{ checksum "Gemfile" }}-{{ checksum "activerecord-postgres_pub_sub.gemspec" }}
+          paths:
+            - vendor/bundle
+
+      # Run Rubocop
+      - run:
+          name: RuboCop
+          command: bundle exec rubocop
+
+      # Run rspec in parallel
+      - type: shell
+        command: |
+          bundle exec rspec --profile 10 \
+                            --format RspecJunitFormatter \
+                            --out test_results/rspec.xml \
+                            --format progress
+
+      # Save test results for timing analysis
+      - store_test_results:
+          path: test_results
