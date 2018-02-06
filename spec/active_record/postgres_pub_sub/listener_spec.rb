@@ -9,9 +9,8 @@ RSpec.describe ActiveRecord::PostgresPubSub::Listener, cleaner_strategy: :trunca
                      timeout_count: 0,
                      payloads: [])
     end
-
-    before do
-      @listener_thread = Thread.new do
+    let!(:listener_thread) do
+      Thread.new do
         begin
           listener_loop(listener_options)
         ensure
@@ -21,8 +20,8 @@ RSpec.describe ActiveRecord::PostgresPubSub::Listener, cleaner_strategy: :trunca
     end
 
     after do
-      @listener_thread.terminate
-      @listener_thread.join
+      listener_thread.terminate
+      listener_thread.join
     end
 
     it "invokes the notify block when it receives a notification" do
@@ -36,7 +35,6 @@ RSpec.describe ActiveRecord::PostgresPubSub::Listener, cleaner_strategy: :trunca
       expect(state.payloads).to eq([nil])
       expect(state.count).to eq(1)
     end
-
 
     context "when using notify_only=false" do
       let(:listener_options) do
@@ -76,14 +74,11 @@ RSpec.describe ActiveRecord::PostgresPubSub::Listener, cleaner_strategy: :trunca
     end
 
     def wait_for(message, timeout: 5, poll_interval: 0.001)
-      expires_at = Time.now + 5
+      expires_at = Time.now + timeout
       loop do
         return if yield
-        if Time.now > expires_at
-          raise "Timed out waiting for #{message}"
-        else
-          sleep(poll_interval)
-        end
+        raise "Timed out waiting for #{message}" if Time.now > expires_at
+        sleep(poll_interval)
       end
     end
 

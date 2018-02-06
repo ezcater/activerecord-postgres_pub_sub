@@ -45,15 +45,15 @@ RSpec.configure do |config|
     `dropdb --if-exists #{DATABASE_NAME}`
   end
 
-  config.before(:each) do |example|
+  config.before do |example|
     DatabaseCleaner.strategy = example.metadata[:cleaner_strategy] || :transaction
   end
 
-  config.before(:each) do
+  config.before do
     DatabaseCleaner.start
   end
 
-  config.after(:each) do
+  config.after do
     DatabaseCleaner.clean
   end
 end

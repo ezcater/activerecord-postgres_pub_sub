@@ -94,7 +94,6 @@ module ActiveRecord
 
         on_timeout_blk&.call if event_result.nil?
       end
-
     end
   end
 end
