@@ -10,12 +10,12 @@ Gem::Specification.new do |spec|
   spec.summary       = "Support for Postgres Notify/Listen"
   spec.description   = spec.summary
   spec.homepage      = "https://github.com/ezcater/activerecord-postgres_pub_sub"
-  
+
   # Set "allowed_push_post" to control where this gem can be published.
   # rubocop:disable Style/GuardClause
   if spec.respond_to?(:metadata)
     spec.metadata["allowed_push_host"] = "https://ezcater.jfrog.io"
-  
+
   else
     raise "RubyGems 2.0 or newer is required to protect against public gem pushes."
   end
@@ -40,7 +40,13 @@ Gem::Specification.new do |spec|
   spec.executables   = []
   spec.require_paths = ["lib"]
 
+  spec.add_runtime_dependency "activerecord", "~> 5.1.4"
+  spec.add_runtime_dependency "pg", "~> 0.18"
+  spec.add_runtime_dependency "private_attr"
+  spec.add_runtime_dependency "with_advisory_lock"
+
   spec.add_development_dependency "bundler", "~> 1.12"
+  spec.add_development_dependency "database_cleaner"
   spec.add_development_dependency "ezcater_gem", ">= 0.2.0"
   spec.add_development_dependency "ezcater_rubocop", "~> 0.51.6"
   spec.add_development_dependency "overcommit"

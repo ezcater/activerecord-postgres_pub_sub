@@ -1,11 +1,7 @@
 # activerecord-postgres_pub_sub
 
-Welcome to your new gem! In this directory, you'll find the files you need to be
-able to package up your Ruby library into a gem. Put your Ruby code in the file
-`lib/activerecord-postgres_pub_sub`. To experiment with that code, run 
-`bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+This gem contains support for PostgreSQL LISTEN and NOTIFY functionality: 
+[doc](https://www.postgresql.org/docs/9.6/static/libpq-notify.html).
 
 ## Installation
 
@@ -25,7 +21,47 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+### Listener
+
+The `Listener` class is used to handle notification messages.
+
+The listener can be configured with three blocks:
+
+* **on_notify**: called whenever a notification is received.
+* **on_start**: called before receiving any notifications.
+* **on_timeout**: called based on a configurable timeout, when no notifications
+  have been received.
+  
+When creating a listener, the following configuration is supported:
+
+* **listen_timeout**: If set, the `on_timeout` block will be called if 
+  no notifications are received within this period. (Default `nil`).  
+* **notify_only**: A payload string can be included in notifications. By default
+  the listener ignores the payload and coalesces multiple notifications into a 
+  single call. When this option is `false`, the `on_notify` block is called with
+  the payload for each notification. (Default `true`).
+* **exclusive_lock**: Acquire a lock using
+  [with_advisory_lock](https://github.com/ClosureTree/with_advisory_lock) prior to listening.
+  This option ensures that a process as a singleton listener. (Default `true`).
+
+Example:
+
+```ruby
+ActiveRecord::PostgresPubSub::Listener.listen("notify_channel", listen_timeout: 30) do |listener|
+  listener.on_start do
+    # when starting assume we missed something and perform regular activity 
+    handle_notification
+  end
+  
+  listener.on_notify do
+    handle_notification
+  end
+  
+  listener.on_timeout do
+    perform_regular_maintenance 
+  end
+end
+```
 
 ## Development
 
