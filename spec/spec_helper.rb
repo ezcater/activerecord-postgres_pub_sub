@@ -30,7 +30,6 @@ RSpec.configure do |config|
 
     `dropdb --if-exists #{DATABASE_NAME} 2> /dev/null`
     `createdb #{DATABASE_NAME}`
-    `psql -d #{DATABASE_NAME} -a -f spec/setup_db.sql`
 
     host = ENV.fetch("PGHOST", "localhost")
     port = ENV.fetch("PGPORT", 5432)
