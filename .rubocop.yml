@@ -1,2 +1,6 @@
 inherit_gem:
   ezcater_rubocop: conf/rubocop.yml
+
+Naming/FileName:
+  Exclude:
+  - "lib/activerecord-postgres_pub_sub.rb"

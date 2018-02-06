@@ -4,6 +4,7 @@ SimpleCov.start
 
 require "activerecord-postgres_pub_sub"
 require "ezcater_gem/rspec"
+require "database_cleaner"
 
 RSpec.configure do |config|
   config.expect_with :rspec do |expectations|
@@ -19,4 +20,39 @@ RSpec.configure do |config|
   config.default_formatter = "doc" if config.files_to_run.one?
   config.order = :random
   Kernel.srand config.seed
+
+  DATABASE_NAME = "postgres_pub_sub_test".freeze
+
+  config.before(:suite) do
+    pg_version = `psql -t -c "select version()";`.strip
+    puts "Testing with Postgres version: #{pg_version}"
+    puts "Testing with ActiveRecord #{ActiveRecord::VERSION::STRING}"
+
+    `dropdb --if-exists #{DATABASE_NAME} 2> /dev/null`
+    `createdb #{DATABASE_NAME}`
+
+    host = ENV.fetch("PGHOST", "localhost")
+    port = ENV.fetch("PGPORT", 5432)
+    database_url = "postgres://#{host}:#{port}/#{DATABASE_NAME}"
+    puts "Using database #{database_url}"
+    ActiveRecord::Base.establish_connection(database_url)
+    DatabaseCleaner.clean_with(:truncation)
+  end
+
+  config.after(:suite) do
+    ActiveRecord::Base.connection_pool.disconnect!
+    `dropdb --if-exists #{DATABASE_NAME}`
+  end
+
+  config.before do |example|
+    DatabaseCleaner.strategy = example.metadata[:cleaner_strategy] || :transaction
+  end
+
+  config.before do
+    DatabaseCleaner.start
+  end
+
+  config.after do
+    DatabaseCleaner.clean
+  end
 end
