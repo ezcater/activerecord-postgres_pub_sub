@@ -10,8 +10,8 @@ jobs:
           - PGUSER: postgres
       - image: circleci/postgres:9.6
         environment:
-          POSTGRES_USER: postgres
-          POSTGRES_DB: postgres_pub_sub_test
+          - POSTGRES_USER: postgres
+          - POSTGRES_DB: postgres_pub_sub_test
     steps:
       - checkout
 
@@ -27,6 +27,7 @@ jobs:
       - run: bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs=4 --retry=3
       - run: bundle clean --force
 
+      # Install Postgres client
       - run: sudo apt update && sudo apt install postgresql-client
 
       # Store bundle cache
