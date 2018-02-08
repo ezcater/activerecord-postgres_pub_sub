@@ -63,6 +63,19 @@ ActiveRecord::PostgresPubSub::Listener.listen("notify_channel", listen_timeout: 
 end
 ```
 
+### Generator
+
+This gem contains a Rails generator for a migration to add a trigger to notify on insert to a table.
+
+The generator must be run with a model name corresponding to the table.
+
+```bash
+rails generate active_record:postgres_pub_sub:notify_on_insert --model_name NameSpace::Entity
+```
+
+In this example, notification events would be generated for the channel named `"name_space_entity"` based
+on inserts to the `name_space_entities` table.
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then,
