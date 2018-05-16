@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 $LOAD_PATH.unshift File.expand_path("../../lib", __FILE__)
 require "simplecov"
 SimpleCov.start
@@ -20,7 +22,7 @@ RSpec.configure do |config|
   config.order = :random
   Kernel.srand config.seed
 
-  DATABASE_NAME = "postgres_pub_sub_test".freeze
+  DATABASE_NAME = "postgres_pub_sub_test"
 
   config.before(:suite) do
     pg_version = `psql -t -c "select version()";`.strip

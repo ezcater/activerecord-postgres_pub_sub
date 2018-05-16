@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe ActiveRecord::PostgresPubSub::Listener, cleaner_strategy: :truncation do
   let(:channel) { "pub_sub_test" }
 

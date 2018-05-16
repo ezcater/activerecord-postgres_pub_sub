@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 source "https://ezcater.jfrog.io/ezcater/api/gems/ezcater-gem-source"
 
 # override the :github shortcut to be secure by using HTTPS
