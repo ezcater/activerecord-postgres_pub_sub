@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "private_attr"
 require "with_advisory_lock"
 

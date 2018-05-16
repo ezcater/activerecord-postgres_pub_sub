@@ -4,3 +4,7 @@ inherit_gem:
 Naming/FileName:
   Exclude:
   - "lib/activerecord-postgres_pub_sub.rb"
+
+# TODO: renable after open-sourcing ezcater_matchers
+Ezcater/RspecMatchOrderedArray:
+  Enabled: false

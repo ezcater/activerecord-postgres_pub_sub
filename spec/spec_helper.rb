@@ -1,9 +1,10 @@
+# frozen_string_literal: true
+
 $LOAD_PATH.unshift File.expand_path("../../lib", __FILE__)
 require "simplecov"
 SimpleCov.start
 
 require "activerecord-postgres_pub_sub"
-require "ezcater_gem/rspec"
 require "database_cleaner"
 
 RSpec.configure do |config|
@@ -21,7 +22,7 @@ RSpec.configure do |config|
   config.order = :random
   Kernel.srand config.seed
 
-  DATABASE_NAME = "postgres_pub_sub_test".freeze
+  DATABASE_NAME = "postgres_pub_sub_test"
 
   config.before(:suite) do
     pg_version = `psql -t -c "select version()";`.strip
