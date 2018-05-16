@@ -1,7 +1,4 @@
 require "bundler/gem_tasks"
-
-require "ezcater_gem"
-
 require "rspec/core/rake_task"
 
 RSpec::Core::RakeTask.new(:spec)

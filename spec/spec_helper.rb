@@ -3,7 +3,6 @@ require "simplecov"
 SimpleCov.start
 
 require "activerecord-postgres_pub_sub"
-require "ezcater_gem/rspec"
 require "database_cleaner"
 
 RSpec.configure do |config|
