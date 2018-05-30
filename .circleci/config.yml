@@ -26,6 +26,7 @@ jobs:
       - run: gem install bundler --no-document
       - run: bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs=4 --retry=3
       - run: bundle clean --force
+      - run: bundle exec appraisal install
 
       # Install Postgres client
       - run: sudo apt update && sudo apt install postgresql-client
@@ -41,13 +42,11 @@ jobs:
           name: RuboCop
           command: bundle exec rubocop
 
-      # Run rspec
-      - type: shell
-        command: |
-          bundle exec rspec --format RspecJunitFormatter \
-                            --out test_results/rspec.xml \
-                            --format progress
+      # Run tests for each appraisal
+      - run:
+          name: rails-5.1
+          command: bundle exec appraisal rails-5.1 rspec --format RspecJunitFormatter --format progress
 
-      # Save test results for timing analysis
-      - store_test_results:
-          path: test_results
+      - run:
+          name: rails-5.2
+          command: bundle exec appraisal rails-5.2 rspec --format RspecJunitFormatter --format progress
