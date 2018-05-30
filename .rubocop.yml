@@ -1,5 +1,5 @@
 inherit_gem:
-  ezcater_rubocop: conf/rubocop.yml
+  ezcater_rubocop: conf/rubocop_gem.yml
 
 Naming/FileName:
   Exclude:
