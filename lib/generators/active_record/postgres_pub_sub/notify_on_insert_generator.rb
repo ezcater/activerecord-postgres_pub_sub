@@ -39,6 +39,10 @@ module ActiveRecord
       def model_title
         @model_title ||= table_name.camelize
       end
+
+      def strong_migrations
+        defined?(StrongMigrations)
+      end
     end
   end
 end
