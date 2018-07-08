@@ -1,5 +1,8 @@
 # activerecord-postgres_pub_sub
 
+## v0.4.0 (unreleased)
+- Add safe instance variable if StrongMigrations is used.
+
 ## v0.3.0
 - Add support for Rails 5.2.
 
