@@ -1,11 +1,12 @@
 # frozen_string_literal: true
 
-$LOAD_PATH.unshift File.expand_path("../../lib", __FILE__)
+$LOAD_PATH.unshift File.expand_path("../lib", __dir__)
 require "simplecov"
 SimpleCov.start
 
 require "activerecord-postgres_pub_sub"
 require "database_cleaner"
+require "ezcater_matchers"
 
 RSpec.configure do |config|
   config.expect_with :rspec do |expectations|
