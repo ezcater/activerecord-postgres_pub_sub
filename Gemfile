@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-source "https://ezcater.jfrog.io/ezcater/api/gems/ezcater-gem-source"
+source "https://rubygems.org"
 
 # override the :github shortcut to be secure by using HTTPS
 git_source(:github) { |repo_name| "https://github.com/#{repo_name}.git" }
