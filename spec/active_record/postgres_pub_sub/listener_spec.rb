@@ -34,7 +34,7 @@ RSpec.describe ActiveRecord::PostgresPubSub::Listener, cleaner_strategy: :trunca
       end
 
       wait_for("notification received") { state.count > 0 }
-      expect(state.payloads).to eq([nil])
+      expect(state.payloads).to match_ordered_array([nil])
       expect(state.count).to eq(1)
     end
 
@@ -51,7 +51,7 @@ RSpec.describe ActiveRecord::PostgresPubSub::Listener, cleaner_strategy: :trunca
         end
 
         wait_for("notification received") { state.count == 3 }
-        expect(state.payloads).to eq(%w(0 1 2))
+        expect(state.payloads).to match_ordered_array(%w(0 1 2))
       end
     end
 
