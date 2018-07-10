@@ -4,6 +4,7 @@ class CreateNotifyOn<%= model_title %>InsertTrigger < ActiveRecord::Migration[5.
   TABLE_MODULE = "<%= table_module %>".freeze
 
   def up
+    <% if strong_migrations %>@safe = true<% end %>
     execute <<-SQL
       CREATE OR REPLACE FUNCTION notify_#{TABLE_MODULE}_listeners() RETURNS TRIGGER AS $$
       DECLARE
@@ -24,6 +25,7 @@ class CreateNotifyOn<%= model_title %>InsertTrigger < ActiveRecord::Migration[5.
   end
 
   def down
+    <% if strong_migrations %>@safe = true<% end %>
     execute <<-SQL
       DROP FUNCTION notify_#{TABLE_MODULE}_listeners() CASCADE
     SQL
