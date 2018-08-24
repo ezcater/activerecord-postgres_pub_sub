@@ -2,7 +2,9 @@
 
 $LOAD_PATH.unshift File.expand_path("../lib", __dir__)
 require "simplecov"
-SimpleCov.start
+SimpleCov.start do
+  add_filter("/spec/")
+end
 
 require "activerecord-postgres_pub_sub"
 require "database_cleaner"
