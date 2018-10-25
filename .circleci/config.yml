@@ -54,16 +54,13 @@ jobs:
           command: bundle exec appraisal rails-5.1 rspec --format RspecJunitFormatter --format progress
 
       - run:
+          name: rails-5.2_pg-0.18
+          command: bundle exec appraisal rails-5.2_pg-0.18 rspec --format RspecJunitFormatter --format progress
+
+
+      - run:
           name: rails-5.2_pg-1.1
           command: |
             ./cc-test-reporter before-build
             bundle exec appraisal rails-5.2_pg-1.1 rspec --format RspecJunitFormatter --format progress
             ./cc-test-reporter after-build -t simplecov --exit-code $?
-
-      - run:
-          name: rails-5.2_pg-0.18
-          command: |
-            ./cc-test-reporter before-build
-            bundle exec appraisal rails-5.2_pg-0.18 rspec --format RspecJunitFormatter --format progress
-            ./cc-test-reporter after-build -t simplecov --exit-code $?
-
