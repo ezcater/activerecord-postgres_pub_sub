@@ -1,5 +1,9 @@
 # activerecord-postgres_pub_sub
 
+## v0.5.0
+- Add support for pg 1.1.3
+- Update Circle to run against Postgres 10.5
+
 ## v0.4.0
 - Add safe instance variable if StrongMigrations is used.
 
