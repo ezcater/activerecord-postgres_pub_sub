@@ -8,7 +8,7 @@ jobs:
         environment:
           - PGHOST: 127.0.0.1
           - PGUSER: postgres
-      - image: circleci/postgres:9.6
+      - image: circleci/postgres:10.5
         environment:
           - POSTGRES_USER: postgres
           - POSTGRES_DB: postgres_pub_sub_test
@@ -54,8 +54,13 @@ jobs:
           command: bundle exec appraisal rails-5.1 rspec --format RspecJunitFormatter --format progress
 
       - run:
-          name: rails-5.2
+          name: rails-5.2_pg-0.18
+          command: bundle exec appraisal rails-5.2_pg-0.18 rspec --format RspecJunitFormatter --format progress
+
+
+      - run:
+          name: rails-5.2_pg-1.1
           command: |
             ./cc-test-reporter before-build
-            bundle exec appraisal rails-5.2 rspec --format RspecJunitFormatter --format progress
+            bundle exec appraisal rails-5.2_pg-1.1 rspec --format RspecJunitFormatter --format progress
             ./cc-test-reporter after-build -t simplecov --exit-code $?
