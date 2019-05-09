@@ -13,11 +13,9 @@ RSpec.describe ActiveRecord::PostgresPubSub::Listener, cleaner_strategy: :trunca
     end
     let!(:listener_thread) do
       Thread.new do
-        begin
-          listener_loop(listener_options)
-        ensure
-          ActiveRecord::Base.clear_active_connections!
-        end
+        listener_loop(listener_options)
+      ensure
+        ActiveRecord::Base.clear_active_connections!
       end
     end
 

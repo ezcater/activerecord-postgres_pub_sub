@@ -1,5 +1,8 @@
 # activerecord-postgres_pub_sub
 
+## v1.0.0
+- No change.
+
 ## v0.5.0
 - Add support for pg 1.1.3
 
