@@ -29,7 +29,7 @@ jobs:
             chmod +x ./cc-test-reporter
 
       # Bundle install dependencies
-      - run: gem install bundler --no-document
+      - run: gem install bundler -v 1.17.3 --no-document
       - run: bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs=4 --retry=3
       - run: bundle clean --force
       - run: bundle exec appraisal install
