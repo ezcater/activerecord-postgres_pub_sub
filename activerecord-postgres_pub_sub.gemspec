@@ -40,13 +40,13 @@ Gem::Specification.new do |spec|
   spec.executables   = []
   spec.require_paths = ["lib"]
 
-  spec.add_runtime_dependency "activerecord", ">= 5.1", "< 5.3"
+  spec.add_runtime_dependency "activerecord", ">= 5.1", "< 6.1"
   spec.add_runtime_dependency "pg", ">= 0.18", "< 1.2"
   spec.add_runtime_dependency "private_attr"
   spec.add_runtime_dependency "with_advisory_lock"
 
   spec.add_development_dependency "appraisal"
-  spec.add_development_dependency "bundler", "~> 1.12"
+  spec.add_development_dependency "bundler", ">= 1.3.0"
   spec.add_development_dependency "database_cleaner"
   spec.add_development_dependency "ezcater_matchers"
   spec.add_development_dependency "ezcater_rubocop", "0.57.3"
