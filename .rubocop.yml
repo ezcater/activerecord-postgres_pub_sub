@@ -4,3 +4,7 @@ inherit_gem:
 Naming/FileName:
   Exclude:
   - "lib/activerecord-postgres_pub_sub.rb"
+
+Naming/MemoizedInstanceVariableName:
+  Exclude:
+  - "lib/generators/active_record/postgres_pub_sub/notify_on_insert_generator.rb"

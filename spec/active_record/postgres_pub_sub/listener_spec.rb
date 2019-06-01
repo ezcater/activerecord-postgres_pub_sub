@@ -78,6 +78,7 @@ RSpec.describe ActiveRecord::PostgresPubSub::Listener, cleaner_strategy: :trunca
       loop do
         return if yield
         raise "Timed out waiting for #{message}" if Time.now > expires_at
+
         sleep(poll_interval)
       end
     end
