@@ -1,5 +1,8 @@
 # activerecord-postgres_pub_sub
 
+## v1.1.0
+- Add support for Rails 6.0.
+
 ## v1.0.0
 - No change.
 
