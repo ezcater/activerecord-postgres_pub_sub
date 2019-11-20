@@ -9,10 +9,10 @@ module ActiveRecord
       extend PrivateAttr
 
       private_attr_reader :on_notify_blk, :on_start_blk, :on_timeout_blk,
-                          :channel, :listen_timeout, :exclusive_lock, :notify_only
+                          :channels, :listen_timeout, :exclusive_lock, :notify_only
 
-      def self.listen(channel, listen_timeout: nil, exclusive_lock: true, notify_only: true)
-        listener = new(channel,
+      def self.listen(*channels, listen_timeout: nil, exclusive_lock: true, notify_only: true)
+        listener = new(*channels,
                        listen_timeout: listen_timeout,
                        exclusive_lock: exclusive_lock,
                        notify_only: notify_only)
@@ -20,8 +20,8 @@ module ActiveRecord
         listener.listen
       end
 
-      def initialize(channel, listen_timeout: nil, exclusive_lock: true, notify_only: true)
-        @channel = channel
+      def initialize(*channels, listen_timeout: nil, exclusive_lock: true, notify_only: true)
+        @channels = channels
         @listen_timeout = listen_timeout
         @exclusive_lock = exclusive_lock
         @notify_only = notify_only
@@ -44,8 +44,8 @@ module ActiveRecord
           on_start_blk&.call
 
           loop do
-            wait_for_notify(connection) do |payload|
-              notify_only ? on_notify_blk.call : on_notify_blk.call(payload)
+            wait_for_notify(connection) do |payload, channel|
+              notify_only ? on_notify_blk.call : on_notify_blk.call(payload, channel)
             end
           end
         end
@@ -56,12 +56,16 @@ module ActiveRecord
       def with_connection
         ActiveRecord::Base.connection_pool.with_connection do |connection|
           with_optional_lock do
-            connection.execute("LISTEN #{channel}")
+            channels.each do |channel|
+              connection.execute("LISTEN #{channel};")
+            end
 
             begin
               yield(connection)
             ensure
-              connection.execute("UNLISTEN #{channel}")
+              channels.each do |channel|
+                connection.execute("UNLISTEN #{channel}")
+              end
             end
           end
         end
@@ -76,7 +80,7 @@ module ActiveRecord
       end
 
       def lock_name
-        "#{channel}-listener"
+        "#{channels.join('-')}-listener"
       end
 
       def empty_channel(connection)
@@ -87,10 +91,11 @@ module ActiveRecord
 
       def wait_for_notify(connection)
         connection_pid = connection.raw_connection.backend_pid
-        event_result = connection.raw_connection.wait_for_notify(listen_timeout) do |_event, pid, payload|
+        event_result = connection.raw_connection.wait_for_notify(listen_timeout) do |notify_channel, pid, payload|
           if pid != connection_pid
             empty_channel(connection.raw_connection) if notify_only
-            yield(payload)
+
+            yield(payload, notify_channel)
           end
         end
 

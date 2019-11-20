@@ -1,5 +1,8 @@
 # activerecord-postgres_pub_sub
 
+## Unreleased
+- Add support listening multiple channels.
+
 ## v2.1.0
 - Set required ruby version to 2.7.0
 - Add support for Rails 7.0
