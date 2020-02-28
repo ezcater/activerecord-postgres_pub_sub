@@ -41,7 +41,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   spec.add_runtime_dependency "activerecord", ">= 5.1", "< 6.1"
-  spec.add_runtime_dependency "pg", ">= 0.18", "< 1.2"
+  spec.add_runtime_dependency "pg", ">= 0.18", "< 2.0"
   spec.add_runtime_dependency "private_attr"
   spec.add_runtime_dependency "with_advisory_lock"
 
