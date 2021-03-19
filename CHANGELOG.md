@@ -1,5 +1,9 @@
 # activerecord-postgres_pub_sub
 
+## v2.0.0 (unreleased)
+- Add support for Rails 6.1.
+- Drop support for pg 0.18 as support has been [dropped in activerecord 6.1](https://github.com/rails/rails/commit/592358e182effecebe8c6a4645bd4431f5a73654).
+
 ## v1.2.0
 - Extend pg support to all of the `1.x` major version.
 
