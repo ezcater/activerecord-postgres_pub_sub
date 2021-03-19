@@ -34,3 +34,13 @@ appraise "rails-6.0_pg-1.2" do
   gem "activerecord", ">= 6.0.0", "< 6.1"
   gem "pg", "1.2.0"
 end
+
+appraise "rails-6.1_pg-1.1" do
+  gem "activerecord", ">= 6.1.0", "< 6.2"
+  gem "pg", "1.1.4"
+end
+
+appraise "rails-6.1_pg-1.2" do
+  gem "activerecord", ">= 6.1.0", "< 6.2"
+  gem "pg", "1.2.0"
+end
