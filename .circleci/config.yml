@@ -50,14 +50,6 @@ jobs:
 
       # Run tests for each appraisal
       - run:
-          name: rails-5.1
-          command: bundle exec appraisal rails-5.1 rspec --format RspecJunitFormatter --format progress
-
-      - run:
-          name: rails-5.2_pg-0.18
-          command: bundle exec appraisal rails-5.2_pg-0.18 rspec --format RspecJunitFormatter --format progress
-
-      - run:
           name: rails-5.2_pg-1.1
           command: |
             bundle exec appraisal rails-5.2_pg-1.1 rspec --format RspecJunitFormatter --format progress
@@ -66,11 +58,6 @@ jobs:
           name: rails-5.2_pg-1.2
           command: |
             bundle exec appraisal rails-5.2_pg-1.2 rspec --format RspecJunitFormatter --format progress
-
-      - run:
-          name: rails-6.0_pg-0.18
-          command: |
-            bundle exec appraisal rails-6.0_pg-0.18 rspec --format RspecJunitFormatter --format progress
 
       - run:
           name: rails-6.0_pg-1.1
