@@ -1,5 +1,8 @@
 # activerecord-postgres_pub_sub
 
+## v2.1.0 (Unreleased)
+- Set required ruby version to 2.7.0
+
 ## v2.0.1
 - Fix version constraint on pg gem.
 - Drop support for rails 5.1 as a result of pg constraint change.
