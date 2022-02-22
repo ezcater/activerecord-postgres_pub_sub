@@ -2,6 +2,7 @@
 
 ## v2.1.0 (Unreleased)
 - Set required ruby version to 2.7.0
+- Add support for Rails 7.0
 
 ## v2.0.1
 - Fix version constraint on pg gem.
