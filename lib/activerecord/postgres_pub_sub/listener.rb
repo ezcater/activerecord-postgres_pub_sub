@@ -67,9 +67,9 @@ module ActiveRecord
         end
       end
 
-      def with_optional_lock
+      def with_optional_lock(&block)
         if exclusive_lock
-          ActiveRecord::Base.with_advisory_lock(lock_name) { yield }
+          ActiveRecord::Base.with_advisory_lock(lock_name, &block)
         else
           yield
         end

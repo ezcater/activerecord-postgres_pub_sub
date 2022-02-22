@@ -66,7 +66,9 @@ RSpec.describe ActiveRecord::PostgresPubSub::Listener, cleaner_strategy: :trunca
     end
 
     def notify(payload)
+      # rubocop:disable Ezcater/RailsTopLevelSqlExecute
       ActiveRecord::Base.connection.execute("NOTIFY #{channel}, '#{payload}'")
+      # rubocop:enable Ezcater/RailsTopLevelSqlExecute
     end
 
     def wait_for_started
