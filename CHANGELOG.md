@@ -1,6 +1,6 @@
 # activerecord-postgres_pub_sub
 
-## v2.1.0 (Unreleased)
+## v2.1.0
 - Set required ruby version to 2.7.0
 - Add support for Rails 7.0
 
