@@ -2,7 +2,7 @@
 
 [![CircleCI](https://circleci.com/gh/ezcater/activerecord-postgres_pub_sub.svg?style=svg)](https://circleci.com/gh/ezcater/activerecord-postgres_pub_sub)
 
-This gem contains support for PostgreSQL LISTEN and NOTIFY functionality: 
+This gem contains support for PostgreSQL LISTEN and NOTIFY functionality:
 [doc](https://www.postgresql.org/docs/9.6/static/libpq-notify.html).
 
 ## Installation
@@ -25,7 +25,8 @@ Or install it yourself as:
 
 ### Listener
 
-The `Listener` class is used to handle notification messages.
+The `Listener` class is used to handle notification messages on one or more
+channels.
 
 The listener can be configured with three blocks:
 
@@ -33,13 +34,13 @@ The listener can be configured with three blocks:
 * **on_start**: called before receiving any notifications.
 * **on_timeout**: called based on a configurable timeout, when no notifications
   have been received.
-  
+
 When creating a listener, the following configuration is supported:
 
-* **listen_timeout**: If set, the `on_timeout` block will be called if 
-  no notifications are received within this period. (Default `nil`).  
+* **listen_timeout**: If set, the `on_timeout` block will be called if
+  no notifications are received within this period. (Default `nil`).
 * **notify_only**: A payload string can be included in notifications. By default
-  the listener ignores the payload and coalesces multiple notifications into a 
+  the listener ignores the payload and coalesces multiple notifications into a
   single call. When this option is `false`, the `on_notify` block is called with
   the payload for each notification. (Default `true`).
 * **exclusive_lock**: Acquire a lock using
@@ -51,16 +52,16 @@ Example:
 ```ruby
 ActiveRecord::PostgresPubSub::Listener.listen("notify_channel", listen_timeout: 30) do |listener|
   listener.on_start do
-    # when starting assume we missed something and perform regular activity 
+    # when starting assume we missed something and perform regular activity
     handle_notification
   end
-  
+
   listener.on_notify do
     handle_notification
   end
-  
+
   listener.on_timeout do
-    perform_regular_maintenance 
+    perform_regular_maintenance
   end
 end
 ```
