@@ -11,6 +11,9 @@ require "database_cleaner"
 require "ezcater_matchers"
 
 RSpec.configure do |config|
+  host = ENV.fetch("PGHOST", "localhost")
+  port = ENV.fetch("PGPORT", 5432)
+
   config.expect_with :rspec do |expectations|
     expectations.include_chain_clauses_in_custom_matcher_descriptions = true
   end
@@ -28,15 +31,13 @@ RSpec.configure do |config|
   DATABASE_NAME = "postgres_pub_sub_test"
 
   config.before(:suite) do
-    pg_version = `psql -t -c "select version()";`.strip
+    pg_version = `psql -h #{host} -p #{port} -t -c "select version()";`.strip
     puts "Testing with Postgres version: #{pg_version}"
     puts "Testing with ActiveRecord #{ActiveRecord::VERSION::STRING}"
 
-    `dropdb --if-exists #{DATABASE_NAME} 2> /dev/null`
-    `createdb #{DATABASE_NAME}`
+    `dropdb -h #{host} -p #{port} --if-exists #{DATABASE_NAME} 2> /dev/null`
+    `createdb -h #{host} -p #{port} #{DATABASE_NAME}`
 
-    host = ENV.fetch("PGHOST", "localhost")
-    port = ENV.fetch("PGPORT", 5432)
     database_url = "postgres://#{host}:#{port}/#{DATABASE_NAME}"
     puts "Using database #{database_url}"
     ActiveRecord::Base.establish_connection(database_url)
@@ -45,7 +46,7 @@ RSpec.configure do |config|
 
   config.after(:suite) do
     ActiveRecord::Base.connection_pool.disconnect!
-    `dropdb --if-exists #{DATABASE_NAME}`
+    `dropdb -h #{host} -p #{port} --if-exists #{DATABASE_NAME}`
   end
 
   config.before do |example|
