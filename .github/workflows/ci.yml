@@ -1,0 +1,84 @@
+name: CI
+on:
+  pull_request:
+  push:
+    branches: [ main ]
+
+env:
+  branch: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.ref || github.ref_name }}
+
+jobs:
+  lint:
+    name: Lint (Ruby ${{ matrix.ruby }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        ruby: [ '2.7' ]  # FU: Build against common ruby 3.x minor versions
+
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v4
+
+      - name: Install Ruby ${{ matrix.ruby }}
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby }}
+
+      - name: Install dependencies
+        run: bundle install
+
+      - name: Run Rubocop
+        run: bundle exec rubocop
+
+  test:
+    name: Test (Ruby ${{ matrix.ruby }}, activerecord ${{ matrix.activerecord }}, pg ${{ matrix.pg }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        activerecord: [ '5.2', '6.0', '6.1', '7.0' ]
+        pg: [ '1.1', '1.2' ]  # FU: Build against common pg 1.x minor versions
+        ruby: [ '2.7' ]  # FU: Build against common ruby 3.x minor versions
+    timeout-minutes: 10
+    needs:
+      - lint
+
+    env:
+      PGUSER: postgres
+
+    services:
+      postgres:
+        image: postgres:11.3  # FU: Test against newer postgres image
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_DB: postgres_pub_sub_test
+          POSTGRES_HOST_AUTH_METHOD: trust
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v4
+
+      - name: Install Ruby ${{ matrix.ruby }}
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby }}
+
+      - name: Install postgresql-client
+        run: sudo apt update && sudo apt install postgresql-client
+
+      - name: Install dependencies
+        run: bundle install
+
+      - name: Install appraisal
+        run: bundle exec appraisal install
+
+      - name: Appraise rails-${{ matrix.activerecord }}_pg-${{ matrix.pg }}
+        run: bundle exec appraisal rails-${{ matrix.activerecord }}_pg-${{ matrix.pg }} rspec

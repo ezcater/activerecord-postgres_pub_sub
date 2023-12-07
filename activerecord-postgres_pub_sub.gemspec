@@ -21,7 +21,7 @@ Gem::Specification.new do |spec|
     raise "RubyGems 2.0 or newer is required to protect against public gem pushes."
   end
 
-  excluded_files = %w(.circleci/config.yml
+  excluded_files = %w(.github/workflows/ci.yml
                       .github/PULL_REQUEST_TEMPLATE.md
                       .gitignore
                       .rspec

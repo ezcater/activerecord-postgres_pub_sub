@@ -1,7 +1,5 @@
 # activerecord-postgres_pub_sub
 
-[![CircleCI](https://circleci.com/gh/ezcater/activerecord-postgres_pub_sub.svg?style=svg)](https://circleci.com/gh/ezcater/activerecord-postgres_pub_sub)
-
 This gem contains support for PostgreSQL LISTEN and NOTIFY functionality:
 [doc](https://www.postgresql.org/docs/9.6/static/libpq-notify.html).
 
