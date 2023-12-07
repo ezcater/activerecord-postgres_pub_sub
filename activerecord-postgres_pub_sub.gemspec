@@ -27,7 +27,7 @@ Gem::Specification.new do |spec|
                       .rspec
                       .rubocop.yml
                       .ruby-gemset
-                      .ruby-version
+                      .tool-versions
                       .travis.yml
                       bin/console
                       bin/setup
