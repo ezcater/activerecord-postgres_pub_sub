@@ -21,20 +21,15 @@ Gem::Specification.new do |spec|
     raise "RubyGems 2.0 or newer is required to protect against public gem pushes."
   end
 
-  excluded_files = %w(.github/workflows/ci.yml
-                      .github/PULL_REQUEST_TEMPLATE.md
-                      .gitignore
+  excluded_files = %w(.gitignore
                       .rspec
                       .rubocop.yml
                       .ruby-gemset
                       .tool-versions
-                      .travis.yml
-                      bin/console
-                      bin/setup
                       Rakefile)
 
   spec.files = `git ls-files -z`.split("\x0").reject do |f|
-    f.match(/^(test|spec|features)\//)
+    f.match(/^(bin|test|spec|features|.github)\//)
   end - excluded_files
   spec.bindir        = "bin"
   spec.executables   = []
