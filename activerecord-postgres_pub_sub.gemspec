@@ -34,9 +34,9 @@ Gem::Specification.new do |spec|
   spec.bindir        = "bin"
   spec.executables   = []
   spec.require_paths = ["lib"]
-  spec.required_ruby_version = ">= 2.7.0"
+  spec.required_ruby_version = ">= 3.0.0"
 
-  spec.add_runtime_dependency "activerecord", "> 5.1", "< 7.2"
+  spec.add_runtime_dependency "activerecord", "> 6.0", "< 7.2"
   spec.add_runtime_dependency "pg", "~> 1.1"
   spec.add_runtime_dependency "private_attr"
   spec.add_runtime_dependency "with_advisory_lock"

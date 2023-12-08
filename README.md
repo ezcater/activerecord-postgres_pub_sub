@@ -77,6 +77,13 @@ rails generate active_record:postgres_pub_sub:notify_on_insert --model_name Name
 In this example, notification events would be generated for the channel named `"name_space_entity"` based
 on inserts to the `name_space_entities` table.
 
+## Supported dependencies
+
+This gem will not support versions of ruby and activerecord which no
+longer receive security updates. It will support the latest major
+version of the pg gem and it will be tested against the latest minor /
+patch version of that gem.
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then,

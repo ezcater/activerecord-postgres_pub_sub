@@ -14,7 +14,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        ruby: [ '2.7' ]
+        ruby: [ '3.0' ]
 
     steps:
       - name: Checkout the code
@@ -32,14 +32,13 @@ jobs:
         run: bundle exec rubocop
 
   test:
-    name: Test (Ruby ${{ matrix.ruby }}, activerecord ${{ matrix.activerecord }}, pg ${{ matrix.pg }})
+    name: Test (Ruby ${{ matrix.ruby }}, activerecord ${{ matrix.activerecord }})
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        activerecord: [ '5.2', '6.0', '6.1', '7.0', '7.1' ]
-        pg: [ '1.1', '1.2' ]  # FU: Build against common pg 1.x minor versions
-        ruby: [ '2.7' ]  # FU: Build against common ruby 3.x minor versions
+        activerecord: [ '6.1', '7.0', '7.1' ]
+        ruby: [ '3.0', '3.1', '3.2' ]
     timeout-minutes: 10
     needs:
       - lint
@@ -74,11 +73,8 @@ jobs:
       - name: Install postgresql-client
         run: sudo apt update && sudo apt install postgresql-client
 
-      - name: Install dependencies
-        run: bundle install
+      - name: Install activerecord_${{ matrix.activerecord }} dependencies
+        run: BUNDLE_GEMFILE=gemfiles/activerecord_${{ matrix.activerecord }}.gemfile bundle install
 
-      - name: Install appraisal
-        run: bundle exec appraisal install
-
-      - name: Appraise rails-${{ matrix.activerecord }}_pg-${{ matrix.pg }}
-        run: bundle exec appraisal rails-${{ matrix.activerecord }}_pg-${{ matrix.pg }} rspec
+      - name: Appraise activerecord_${{ matrix.activerecord }}
+        run: bundle exec appraisal activerecord_${{ matrix.activerecord }} rspec
