@@ -42,7 +42,7 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency "with_advisory_lock"
 
   spec.add_development_dependency "appraisal"
-  spec.add_development_dependency "bundler", ">= 2.4.0"
+  spec.add_development_dependency "bundler", "~> 2.2"
   spec.add_development_dependency "database_cleaner"
   spec.add_development_dependency "ezcater_matchers"
   spec.add_development_dependency "ezcater_rubocop", "~> 6.1.0"
