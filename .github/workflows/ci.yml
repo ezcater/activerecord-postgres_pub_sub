@@ -14,7 +14,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        ruby: [ '2.7' ]  # FU: Build against common ruby 3.x minor versions
+        ruby: [ '2.7' ]
 
     steps:
       - name: Checkout the code
@@ -49,7 +49,7 @@ jobs:
 
     services:
       postgres:
-        image: postgres:11.3  # FU: Test against newer postgres image
+        image: postgres:16.1
         env:
           POSTGRES_USER: postgres
           POSTGRES_DB: postgres_pub_sub_test

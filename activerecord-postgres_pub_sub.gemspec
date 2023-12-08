@@ -21,20 +21,15 @@ Gem::Specification.new do |spec|
     raise "RubyGems 2.0 or newer is required to protect against public gem pushes."
   end
 
-  excluded_files = %w(.github/workflows/ci.yml
-                      .github/PULL_REQUEST_TEMPLATE.md
-                      .gitignore
+  excluded_files = %w(.gitignore
                       .rspec
                       .rubocop.yml
                       .ruby-gemset
-                      .ruby-version
-                      .travis.yml
-                      bin/console
-                      bin/setup
+                      .tool-versions
                       Rakefile)
 
   spec.files = `git ls-files -z`.split("\x0").reject do |f|
-    f.match(/^(test|spec|features)\//)
+    f.match(/^(bin|test|spec|features|.github)\//)
   end - excluded_files
   spec.bindir        = "bin"
   spec.executables   = []
@@ -47,13 +42,12 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency "with_advisory_lock"
 
   spec.add_development_dependency "appraisal"
-  spec.add_development_dependency "bundler", ">= 1.3.0"
+  spec.add_development_dependency "bundler", ">= 2.4.0"
   spec.add_development_dependency "database_cleaner"
   spec.add_development_dependency "ezcater_matchers"
-  spec.add_development_dependency "ezcater_rubocop", "~> 3.0"
+  spec.add_development_dependency "ezcater_rubocop", "~> 6.1.0"
   spec.add_development_dependency "overcommit"
-  spec.add_development_dependency "rake", "~> 10.0"
+  spec.add_development_dependency "rake", "~> 13.1"
   spec.add_development_dependency "rspec", "~> 3.4"
-  spec.add_development_dependency "rspec_junit_formatter", "0.2.2"
   spec.add_development_dependency "simplecov"
 end
