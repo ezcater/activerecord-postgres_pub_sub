@@ -1,5 +1,8 @@
 # activerecord-postgres_pub_sub
 
+## Unreleased
+- BREAKING: Drop support for ActiveRecord 5.2
+
 ## v2.3.0
 - Add support for Rails 7.1
 

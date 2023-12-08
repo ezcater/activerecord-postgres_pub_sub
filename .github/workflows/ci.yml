@@ -37,7 +37,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        activerecord: [ '5.2', '6.0', '6.1', '7.0', '7.1' ]
+        activerecord: [ '6.0', '6.1', '7.0', '7.1' ]
         pg: [ '1.5' ]
         ruby: [ '3.1' ]
     timeout-minutes: 10
