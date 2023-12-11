@@ -14,7 +14,7 @@ RSpec.describe ActiveRecord::PostgresPubSub::Listener, cleaner_strategy: :trunca
     end
     let!(:listener_thread) do
       Thread.new do
-        listener_loop(listener_options)
+        listener_loop(**listener_options)
       ensure
         ActiveRecord::Base.clear_active_connections!
       end
@@ -40,7 +40,7 @@ RSpec.describe ActiveRecord::PostgresPubSub::Listener, cleaner_strategy: :trunca
     context "when using 1-arg version of #on_notify" do
       let!(:listener_thread) do
         Thread.new do
-          listener_loop(listener_options) do |listener|
+          listener_loop(**listener_options) do |listener|
             listener.on_notify do |payload|
               state.count += 1
               state.payloads << payload
