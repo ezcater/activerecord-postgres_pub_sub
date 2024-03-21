@@ -41,6 +41,8 @@ When creating a listener, the following configuration is supported:
   the listener ignores the payload and coalesces multiple notifications into a
   single call. When this option is `false`, the `on_notify` block is called with
   the payload for each notification. (Default `true`).
+* **base_class**: An Active Record class should you need to use a different base
+  class (e.g. for multiple database support). (Default `ActiveRecord::Base`).
 * **exclusive_lock**: Acquire a lock using
   [with_advisory_lock](https://github.com/ClosureTree/with_advisory_lock) prior to listening.
   This option ensures that a process as a singleton listener. (Default `true`).

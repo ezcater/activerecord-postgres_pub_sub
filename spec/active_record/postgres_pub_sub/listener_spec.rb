@@ -2,6 +2,7 @@
 
 RSpec.describe ActiveRecord::PostgresPubSub::Listener, cleaner_strategy: :truncation do
   let(:channel) { "pub_sub_test" }
+  let(:base_class) { ActiveRecord::Base }
 
   describe ".listen" do
     let(:listener_options) { Hash.new }
@@ -16,7 +17,7 @@ RSpec.describe ActiveRecord::PostgresPubSub::Listener, cleaner_strategy: :trunca
       Thread.new do
         listener_loop(**listener_options)
       ensure
-        ActiveRecord::Base.clear_active_connections!
+        base_class.clear_active_connections!
       end
     end
 
@@ -93,7 +94,7 @@ RSpec.describe ActiveRecord::PostgresPubSub::Listener, cleaner_strategy: :trunca
       end
     end
 
-    context "when listen to multiple channels" do
+    context "when listen to multiple channels" do # rubocop:disable RSpec/MultipleMemoizedHelpers
       let(:channels) { %w(pub_sub_test1 pub_sub_test2) }
       let(:listener_options) { Hash[listen_to: channels, notify_only: false] }
 
@@ -110,10 +111,25 @@ RSpec.describe ActiveRecord::PostgresPubSub::Listener, cleaner_strategy: :trunca
       end
     end
 
+    context "when using a custom base class for multiple databases" do
+      let(:base_class) { OtherApplicationRecord }
+      let(:listener_options) { Hash[base_class: base_class] }
+
+      it "invokes the notify block when it receives a notification" do
+        wait_for_started
+
+        OtherApplicationRecord.transaction do
+          3.times { |i| notify(i) }
+        end
+
+        wait_for("notification received") { state.count > 0 }
+        expect(state.payloads).to match_ordered_array([nil])
+        expect(state.count).to eq(1)
+      end
+    end
+
     def notify(payload, notify_to: channel)
-      # rubocop:disable Ezcater/RailsTopLevelSqlExecute
-      ActiveRecord::Base.connection.execute("NOTIFY #{notify_to}, '#{payload}'")
-      # rubocop:enable Ezcater/RailsTopLevelSqlExecute
+      base_class.connection.execute("NOTIFY #{notify_to}, '#{payload}'")
     end
 
     def wait_for_started
@@ -130,11 +146,18 @@ RSpec.describe ActiveRecord::PostgresPubSub::Listener, cleaner_strategy: :trunca
       end
     end
 
-    def listener_loop(listen_to: [channel], listen_timeout: nil, exclusive_lock: true, notify_only: true)
+    def listener_loop(
+      listen_to: [channel],
+      listen_timeout: nil,
+      exclusive_lock: true,
+      notify_only: true,
+      base_class: ActiveRecord::Base
+    )
       described_class.listen(*listen_to,
                              listen_timeout: listen_timeout,
                              exclusive_lock: exclusive_lock,
-                             notify_only: notify_only) do |listener|
+                             notify_only: notify_only,
+                             base_class: base_class) do |listener|
         listener.on_start do
           state.started += 1
         end
