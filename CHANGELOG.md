@@ -1,5 +1,9 @@
 # activerecord-postgres_pub_sub
 
+## v3.1.0
+- Add support for ActiveRecord 7.2
+- Add support for Ruby 3.3
+
 ## v3.0.0
 - Add support for multiple databases by allowing injection of the base Active Record class.
 - BREAKING: Drop support for ActiveRecord 5.2, 6.0

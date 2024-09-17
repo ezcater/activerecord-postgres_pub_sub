@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "ostruct"
+
 RSpec.describe ActiveRecord::PostgresPubSub::Listener, cleaner_strategy: :truncation do
   let(:channel) { "pub_sub_test" }
   let(:base_class) { ActiveRecord::Base }
@@ -17,7 +19,7 @@ RSpec.describe ActiveRecord::PostgresPubSub::Listener, cleaner_strategy: :trunca
       Thread.new do
         listener_loop(**listener_options)
       ensure
-        base_class.clear_active_connections!
+        base_class.connection_handler.clear_active_connections!
       end
     end
 
@@ -48,7 +50,7 @@ RSpec.describe ActiveRecord::PostgresPubSub::Listener, cleaner_strategy: :trunca
             end
           end
         ensure
-          ActiveRecord::Base.clear_active_connections!
+          ActiveRecord::Base.connection_handler.clear_active_connections!
         end
       end
 
