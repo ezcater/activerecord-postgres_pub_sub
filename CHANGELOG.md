@@ -1,5 +1,9 @@
 # activerecord-postgres_pub_sub
 
+## v3.2.0
+- Add support for ActiveRecord 8.0
+- Add support for Ruby 3.4
+
 ## v3.1.0
 - Add support for ActiveRecord 7.2
 - Add support for Ruby 3.3
