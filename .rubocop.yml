@@ -1,8 +1,11 @@
 inherit_gem:
   ezcater_rubocop: conf/rubocop_gem.yml
 
+plugins:
+  - rubocop-capybara
+
 AllCops:
-    TargetRubyVersion: 3.0
+    TargetRubyVersion: 3.2
     SuggestExtensions: false
 
 Naming/FileName:

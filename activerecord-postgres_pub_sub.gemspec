@@ -34,7 +34,7 @@ Gem::Specification.new do |spec|
   spec.bindir        = "bin"
   spec.executables   = []
   spec.require_paths = ["lib"]
-  spec.required_ruby_version = ">= 3.0.0"
+  spec.required_ruby_version = ">= 3.2.0"
 
   spec.add_runtime_dependency "activerecord", "> 6.0", "< 8.1"
   spec.add_runtime_dependency "pg", "~> 1.1"
@@ -45,7 +45,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "bundler", "~> 2.2"
   spec.add_development_dependency "database_cleaner"
   spec.add_development_dependency "ezcater_matchers"
-  spec.add_development_dependency "ezcater_rubocop", "~> 6.1.0"
+  spec.add_development_dependency "ezcater_rubocop", "~> 9.0.0"
   spec.add_development_dependency "overcommit"
   spec.add_development_dependency "rake", "~> 13.1"
   spec.add_development_dependency "rspec", "~> 3.4"

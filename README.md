@@ -94,9 +94,11 @@ interactive prompt that will allow you to experiment.
 
 To install this gem onto your local machine, run `bundle exec rake install`.
 
-To release a new version, update the version number in `version.rb`, and then
-run `bundle exec rake release`, which will create a git tag for the version,
-push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+To release a new version, first ensure that the CHANGELOG.md and `version.rb` files are updated. In the
+GitHub UI for this repository, navigate to `Actions -> Release Gem` and click `Run workflow`. Select
+the branch you intend to release (most likely `main`). The action will create and push a git tag then
+release the new version to Rubygems.org using the [trusted publishing](https://guides.rubygems.org/trusted-publishing/)
+feature.
 
 ## Contributing
 
