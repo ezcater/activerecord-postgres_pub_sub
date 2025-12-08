@@ -1,5 +1,8 @@
 # activerecord-postgres_pub_sub
 
+## v3.4.0
+- Add support for ActiveRecord 8.1
+
 ## v3.3.0
 - Remove support for Ruby 3.0 and 3.1
 - Switch to using RubyGems trusted publishing instead of manual releases
