@@ -36,7 +36,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
   spec.required_ruby_version = ">= 3.2.0"
 
-  spec.add_runtime_dependency "activerecord", "> 6.0", "< 8.1"
+  spec.add_runtime_dependency "activerecord", "> 6.0", "< 8.2"
   spec.add_runtime_dependency "pg", "~> 1.1"
   spec.add_runtime_dependency "private_attr"
   spec.add_runtime_dependency "with_advisory_lock"
