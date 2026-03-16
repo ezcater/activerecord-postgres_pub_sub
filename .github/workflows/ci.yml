@@ -54,6 +54,9 @@ jobs:
     services:
       postgres:
         image: postgres:16.1
+        credentials:
+          username: ${{ secrets.DOCKERHUB_CONTAINER_REGISTRY_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_CONTAINER_REGISTRY_PASSWORD }}
         env:
           POSTGRES_USER: postgres
           POSTGRES_DB: postgres_pub_sub_test
