@@ -1,5 +1,8 @@
 # activerecord-postgres_pub_sub
 
+> [!WARNING]
+> This gem has been archived by ezCater and will no longer be receiving updates.
+
 This gem contains support for PostgreSQL LISTEN and NOTIFY functionality:
 [doc](https://www.postgresql.org/docs/9.6/static/libpq-notify.html).
 

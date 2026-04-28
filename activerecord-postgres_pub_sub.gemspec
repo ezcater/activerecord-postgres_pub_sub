@@ -13,6 +13,7 @@ Gem::Specification.new do |spec|
   spec.description   = spec.summary
   spec.homepage      = "https://github.com/ezcater/activerecord-postgres_pub_sub"
   spec.license       = "MIT"
+  spec.post_install_message = "WARNING: activerecord-postgres_pub_sub has been archived by ezCater and is no longer maintained. This gem will not receive further updates."
 
   # Set "allowed_push_post" to control where this gem can be published.
   if spec.respond_to?(:metadata)
